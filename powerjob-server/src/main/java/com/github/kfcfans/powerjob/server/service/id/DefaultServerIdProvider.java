@@ -7,6 +7,11 @@ import com.github.kfcfans.powerjob.server.persistence.core.repository.ServerInfo
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
+import java.net.InetAddress;
+import java.net.UnknownHostException;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 /**
  * 默认服务器 ID 生成策略，不适用于 Server 频繁重启且变化 IP 的场景
  * @author user
@@ -14,6 +19,10 @@ import org.springframework.stereotype.Service;
 @Slf4j
 @Service
 public class DefaultServerIdProvider implements ServerIdProvider {
+    /**
+     * xxx-1,aa-bb-2
+     */
+    private static final Pattern HOSTNAME_PATTERN = Pattern.compile("^.*-([0-9]+)\\..+");
 
     private final Long id;
 
@@ -32,6 +41,15 @@ public class DefaultServerIdProvider implements ServerIdProvider {
 
     @Override
     public long getServerId() {
-        return id;
+        try {
+            String hostname = InetAddress.getLocalHost().getHostName();
+            Matcher matcher = HOSTNAME_PATTERN.matcher(hostname);
+            if (matcher.matches()) {
+                return Long.parseLong(matcher.group(1));
+            }
+            throw new RuntimeException(String.format("hostname=%s not match %s", hostname, HOSTNAME_PATTERN.toString()));
+        } catch (UnknownHostException e) {
+            throw new RuntimeException(e);
+        }
     }
 }

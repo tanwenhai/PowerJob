@@ -35,7 +35,7 @@ public class WorkflowInfoDO {
 
     // 工作流的DAG图信息（点线式DAG的json）
     @Lob
-    @Column
+    @Column(columnDefinition = "text")
     @Type(type = TypeDefConstant.STRING_TYPE)
     private String peDAG;
 

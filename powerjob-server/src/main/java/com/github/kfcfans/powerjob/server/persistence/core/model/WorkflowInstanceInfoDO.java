@@ -39,16 +39,16 @@ public class WorkflowInstanceInfoDO {
 
     // 工作流启动参数
     @Lob
-    @Column
+    @Column(columnDefinition = "text")
     @Type(type = TypeDefConstant.STRING_TYPE)
     private String wfInitParams;
 
     @Lob
-    @Column
+    @Column(columnDefinition = "text")
     @Type(type = TypeDefConstant.STRING_TYPE)
     private String dag;
     @Lob
-    @Column
+    @Column(columnDefinition = "text")
     @Type(type = TypeDefConstant.STRING_TYPE)
     private String result;
 

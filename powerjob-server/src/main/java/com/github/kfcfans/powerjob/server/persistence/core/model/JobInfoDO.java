@@ -52,7 +52,7 @@ public class JobInfoDO {
     private Integer processorType;
     // 执行器信息（可能需要存储整个脚本文件）
     @Lob
-    @Column
+    @Column(columnDefinition = "text")
     @Type(type = TypeDefConstant.STRING_TYPE)
     private String processorInfo;
 

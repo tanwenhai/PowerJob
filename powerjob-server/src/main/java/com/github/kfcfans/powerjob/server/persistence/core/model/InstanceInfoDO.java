@@ -36,7 +36,7 @@ public class InstanceInfoDO {
     private Long instanceId;
     // 任务实例参数
     @Lob
-    @Column
+    @Column(columnDefinition = "text")
     @Type(type = TypeDefConstant.STRING_TYPE)
     private String instanceParams;
 
@@ -50,7 +50,7 @@ public class InstanceInfoDO {
     private Integer status;
     // 执行结果（允许存储稍大的结果）
     @Lob
-    @Column
+    @Column(columnDefinition = "text")
     @Type(type = TypeDefConstant.STRING_TYPE)
     private String result;
     // 预计触发时间
